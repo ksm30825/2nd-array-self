@@ -1,0 +1,103 @@
+package com.kh.silsub6.model;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class SampleSelf {
+	public void munjae1() {
+		int[][] arr = new int[4][4];//4*4행렬 생성
+		int[] tempArr = new int[4];//1*4헹렬 생성
+		int sum =0;//마지막 열의 합
+		int ran=0;//난수
+		
+		//행을 0~행의 길이만큼//0,1,2,3 만큼 돌림
+		for(int i=0;i<arr.length;i++) {
+			//행이 한 칸씩 생길때마다 한 행의 누적합을 초기화
+			//초기화 시켜주지 않는다면 값이 계속 증가
+			sum=0;
+			//열을 0,1,2,3 만큼 돌림
+			for(int j=0;j<arr[i].length;j++) {
+				
+				//3*3행렬에 난수 넣기
+				//행<3일떼 즉 0,1,2 일때
+				if(i<arr.length-1) {
+					//열<3일때 즉 0,1,2 일때
+					if(j<arr.length-1) {
+						ran = new Random().nextInt(100)+1;//난수 생성
+						arr[i][j] =ran;//각 자리에 해당하는 곳마다 난수 집어넣기
+						sum+=ran;//j가 증가할때마다 생성된 난수를 누적해서 더하기
+						tempArr[j]+=ran;//1*4행렬에 생성된 난수값을 누적해서 더하기
+										//단, j로 돌아가는 행렬이기 때문에 i가 증가할때마다 누적으로 더해진다.
+					}//3*3행렬 생성이 끝남
+					
+					//j=3일때 각 행의 마지막열에 누적된 합을 출력한다.
+					else {
+						arr[i][j]=sum;//누적된 sum값을 arr[i][3]에 집어넣는다.
+						tempArr[j]+=sum;//1*4행렬의 마직막 값에 sum들을 누적으로 더한다.
+					}
+				}//i<3일때의 연산이 종료됨
+				//i=3일때 1*4행렬값들을 i=3인 행렬에 대입한다. 
+				else {
+					arr[i][j]=tempArr[j];
+					//단, arr[3][3]인 경우엔 가로 세로의 합이 들어가야 하니 1*4행렬에서의 값들을 누적으로 더해준다.
+					if(j==arr.length-1) {
+						arr[i][j]+=tempArr[j];
+					}
+				}//조건에 일치하는 값들의 연산들이 종료됨
+			}//열의 반복문이 종료됨
+		}//행의 반복문이 종료됨
+		//출력코드
+		for(int i=0;i<arr.length;i++) {
+			for(int j=0;j<arr[i].length;j++) {
+				System.out.print(arr[i][j]+"\t");
+			}
+			System.out.println();
+		}		
+	}
+	public void munjae1_1() {
+		int[][] arr = new int[4][4];
+		int sum=0;
+		int ran=0;
+		for(int i=0;i<arr.length-1;i++) {
+			for(int j=0;j<arr[i].length-1;j++) {
+				ran = new Random().nextInt(100)+1;
+				arr[i][j]=ran;
+				arr[i][3]+=arr[i][j];
+				arr[3][j]+=arr[i][j];
+			}
+			arr[3][3]+=arr[i][3];//가로 세로의 합구하기...
+		}
+		for(int i=0;i<arr.length;i++) {
+			for(int j=0;j<arr[i].length;j++) {
+				System.out.print(arr[i][j]+"\t");
+			}
+			System.out.println();
+		}	
+	}
+	public void munjae2() {
+		Scanner sc = new Scanner(System.in);
+		int[][] arr = new int[3][];
+		int[] sum = new int[3];
+		for(int i=0; i<sum.length;i++) {
+			System.out.print(i+"행 입력 : ");
+			arr[i]=new int[sc.nextInt()];
+		}
+		System.out.println("==============================");
+		for(int i=0;i<arr.length;i++) {
+			for(int j=0;j<arr[i].length;j++) {
+				arr[i][j]=new Random().nextInt(10)+1;
+				
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		SampleSelf test = new SampleSelf();//SampleSelf라는 자료형을 가진 test라는 변수가 stack의 공간에 선언이 되고 
+											//할당연산자 new를 통해 SampleSelf라는 객체를 불러오게 된다.???
+		//test.munjae1();
+		//test.munjae1_1();
+		test.munjae2();
+		
+	}
+	
+}
